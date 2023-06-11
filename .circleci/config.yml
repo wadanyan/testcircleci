@@ -22,7 +22,7 @@ jobs:
       <<: *hello_place_anchor
       executor:
         name: hello_executor
-worlflows:
+workflows:
   hello_use_anchor:
     jobs:
       - hello_use_anchor:
