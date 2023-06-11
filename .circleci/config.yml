@@ -26,5 +26,5 @@ worlflows:
   hello_use_anchor:
     jobs:
       - hello_use_anchor:
-	  name: echo_tokyo
-	  env: "Osaka"
+          name: echo_tokyo
+          env: "Osaka"
