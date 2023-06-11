@@ -23,8 +23,8 @@ jobs:
       executor:
         name: hello_executor
 worlflows:
-	hello_use_anchor:
-	    jobs:
-	      - hello_use_anchor:
-	          name: echo_tokyo
-	          env: "Osaka"
+  hello_use_anchor:
+    jobs:
+      - hello_use_anchor:
+	  name: echo_tokyo
+	  env: "Osaka"
