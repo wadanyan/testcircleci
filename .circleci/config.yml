@@ -1,30 +1,15 @@
 version: 2.1
 
-#処理の順序を指定
-workflows:
-  hello_exexutor_commnad:
-    jobs:
-      - hello_use_executor_command
-
-
-#アンカーと同じ繰り返し使える。指定する範囲が違う。基本的に一つの変数を設定する
-parameters:
-  echoplacename:
-    type: string
-    default: "Okinawa"
-
-#アンカーと同じ繰り返し使える。指定する範囲が違う。環境を指定する。
-executors:
-  hello_generic_cmd:
+#ここに指定しているものは繰り返しすかうことができる。
+anchor:
+  hello_place_anchor: &hello_place_anchor
     parameters:
-      placeName:
-        default: "test"
+      env:
         type: string
     steps:
-      - run: echo Hello, <<parameters.placeName>>
-  
-#アンカーと同じ繰り返し使える。指定する範囲が違う。stepsに関連した内容を保存
-commands:
+      - run:
+          command: echo Hello, << parameters.env >>
+executors:
   hello_executor:
     docker:
       - image: cimg/base:<<parameters.tag>>
@@ -32,17 +17,14 @@ commands:
       tag:
         default: "2021.07"
         type: string
-
-#処理の内容を記述する。
-jobs:
-  hello_use_executor_command:
-    commands: 
-      name: hello_executor
-      
-    steps:
-      - executor:
-          name: hello_generic_cmd
-          placeName: "tokyo"
-          
-          
-  
+jobs: 
+	hello_use_anchor:
+	    <<: *hello_place_anchor
+	    executor:
+	      name: hello_executor
+worlflows:
+	hello_use_anchor:
+	    jobs:
+	      - hello_use_anchor:
+	          name: echo_tokyo
+	          env: "Osaka"
