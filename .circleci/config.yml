@@ -18,10 +18,10 @@ executors:
         default: "2021.07"
         type: string
 jobs: 
-	hello_use_anchor:
-	    <<: *hello_place_anchor
-	    executor:
-	      name: hello_executor
+  hello_use_anchor:
+      <<: *hello_place_anchor
+      executor:
+        name: hello_executor
 worlflows:
 	hello_use_anchor:
 	    jobs:
