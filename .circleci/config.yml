@@ -1,0 +1,48 @@
+version: 2.1
+
+#処理の順序を指定
+workflows:
+  hello_exexutor_commnad:
+    jobs:
+      - hello_use_executor_command
+
+
+#アンカーと同じ繰り返し使える。指定する範囲が違う。基本的に一つの変数を設定する
+parameters:
+  echoplacename:
+    type: string
+    default: "Okinawa"
+
+#アンカーと同じ繰り返し使える。指定する範囲が違う。環境を指定する。
+executors:
+  hello_generic_cmd:
+    parameters:
+      placeName:
+        default: "test"
+        type: string
+    steps:
+      - run: echo Hello, <<parameters.placeName>>
+  
+#アンカーと同じ繰り返し使える。指定する範囲が違う。stepsに関連した内容を保存
+commands:
+  hello_executor:
+    docker:
+      - image: cimg/base:<<parameters.tag>>
+    parameters:
+      tag:
+        default: "2021.07"
+        type: string
+
+#処理の内容を記述する。
+jobs:
+  hello_use_executor_command:
+    commands: 
+      name: hello_executor
+      
+    steps:
+      - executor:
+          name: hello_generic_cmd
+          placeName: "tokyo"
+          
+          
+  
